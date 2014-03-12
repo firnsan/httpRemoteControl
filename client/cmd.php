@@ -56,11 +56,11 @@ if (($_POST["ver"]!=NULL)&&($_POST["id"] != NULL)&&($_POST["type"]=='download'))
 if (($_FILES["file"]["type"] == "image/gif")
 || ($_FILES["file"]["type"] == "image/jpeg")
 || ($_FILES["file"]["type"] == "image/pjpeg"))
-  {
-  if ($_FILES["file"]["error"] > 0)
-    {
+{
+	if ($_FILES["file"]["error"] > 0)
+	{
 		echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
-    }
+	}
 	else
     {
 		echo "Upload: " . $_FILES["file"]["name"] . "<br />";
@@ -78,8 +78,8 @@ if (($_FILES["file"]["type"] == "image/gif")
 				"upload/" . $_FILES["file"]["name"]);
 				echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
 			}
-		}
-  }
+	}
+}
 
 //将命令回显写入文件
 
