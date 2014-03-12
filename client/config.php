@@ -3,7 +3,7 @@
 
 	$dbaddr = "localhost";
 	$username = "root";
-	$password = "hack2010";
+	$password = "123456";
     $dbname= "httpremote";
 	date_default_timezone_set("Asia/Shanghai");
 ?>
