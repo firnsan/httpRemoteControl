@@ -29,15 +29,15 @@ BOOL AddRequestHeaders(HINTERNET hRequest, LPCWSTR header)
 }
 BOOL SendRequest(HINTERNET hRequest, const void* body, DWORD size)
 {
-
+	//第二个参数不能为0！！！！！！不然主控端会收不到output
 	return WinHttpSendRequest(hRequest,  L"Content-Type: application/x-www-form-urlencoded\r\n", 0, const_cast<void*>(body), size, size, 0);
 	
-//第二个参数不能为0！！！！！！不然主控端会收不到output
 }
 BOOL SendRequest2(HINTERNET hRequest, const void* body, DWORD size)
 {
-return WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, const_cast<void*>(body), size, size, 0);
-//WINHTTP_NO_ADDITIONAL_HEADERS第二个参数必须不为L"Content-Type: application/x-www-form-urlencoded\r\n"！！！！！！不然上传不了图片
+	//WINHTTP_NO_ADDITIONAL_HEADERS第二个参数必须不为L"Content-Type: application/x-www-form-urlencoded\r\n"！！！！！！不然上传不了图片
+	return WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, const_cast<void*>(body), size, size, 0);
+
 }
 
 BOOL EndRequest(HINTERNET hRequest)

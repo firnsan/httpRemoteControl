@@ -17,7 +17,8 @@ void CDownload::OnReceive(LPBYTE lpBuff,DWORD dwSize)
 	int i;
 	for (i=0;i<dwSize;i++)
 	{
-		if(lpBuff[0]=='R'&&lpBuff[1]=='E'&&lpBuff[2]=='P')break;
+		if(lpBuff[0]=='R'&&lpBuff[1]=='E'&&lpBuff[2]=='P')
+			break;
 		lpBuff++;
 
 	}
@@ -31,10 +32,12 @@ void CDownload::OnReceive(LPBYTE lpBuff,DWORD dwSize)
 	char strUrlandName[10240];
 	memcpy(strUrlandName,lpBuff+3,dwSize);
 
-	if(memcmp(strUrlandName,"donothing^donothing",10)==0)return;
+	if(memcmp(strUrlandName,"donothing^donothing",10)==0)
+		return;
 
 	char* temp=strchr(strUrlandName,'^');
-	if(!temp)return;
+	if(!temp)
+		return;
 
 	char url[256];
 	char filename[256];

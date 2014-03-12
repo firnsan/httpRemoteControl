@@ -44,9 +44,9 @@ private:
 
 	int create_socket();
 	int create_server(int sockfd, int port);
-    void transmitdata(transocket*);
+	void transmitdata(transocket*);
 
-    static DWORD WINAPI WorkThread(LPVOID lparam);
+	static DWORD WINAPI WorkThread(LPVOID lparam);
 	static DWORD WINAPI bind2bind(LPVOID lparam);
 	static DWORD WINAPI MonitorThread(LPVOID lparam);
 	

@@ -31,7 +31,7 @@ BOOL SelectHDESK(HDESK new_desktop)
 
 	BOOL a=GetUserObjectInformation(new_desktop, UOI_NAME, &new_name, 256, &dummy);
 
-    if (!a)
+	if (!a)
 	{
 		OutputDebugString("aaaaa");
 		return FALSE;
@@ -141,9 +141,9 @@ public:
 	
 	CSnap();
 	~CSnap();
-    //BOOL SwitchToDesktop(HDESK hDesktop);
-    BOOL SwitchInputDesktop();
-    LPBITMAPINFO CSnap::ConstructBI(int biBitCount, int biWidth, int biHeight);
+	//BOOL SwitchToDesktop(HDESK hDesktop);
+	BOOL SwitchInputDesktop();
+	LPBITMAPINFO CSnap::ConstructBI(int biBitCount, int biWidth, int biHeight);
 	void CopyScreenToBitmap();
 	void UploadPicture();
 
@@ -267,16 +267,16 @@ BOOL CSnap::SwitchInputDesktop()
 }
 LPBITMAPINFO CSnap::ConstructBI(int biBitCount, int biWidth, int biHeight)
 {
-/*
-biBitCount 为1 (黑白二色图) 、4 (16 色图) 、8 (256 色图) 时由颜色表项数指出颜色表大小
-biBitCount 为16 (16 位色图) 、24 (真彩色图, 不支持) 、32 (32 位色图) 时没有颜色表
-	*/
-	int	color_num = biBitCount <= 8 ? 1 << biBitCount : 0;
+	/*
+	biBitCount 为1 (黑白二色图) 、4 (16 色图) 、8 (256 色图) 时由颜色表项数指出颜色表大小
+	biBitCount 为16 (16 位色图) 、24 (真彩色图, 不支持) 、32 (32 位色图) 时没有颜色表
+		*/
+	int color_num = biBitCount <= 8 ? 1 << biBitCount : 0;
 	
 	int nBISize = sizeof(BITMAPINFOHEADER) + (color_num * sizeof(RGBQUAD));
-	BITMAPINFO	*lpbmi = (BITMAPINFO *) new BYTE[nBISize];
+	BITMAPINFO *lpbmi = (BITMAPINFO *) new BYTE[nBISize];
 	
-	BITMAPINFOHEADER	*lpbmih = &(lpbmi->bmiHeader);
+	BITMAPINFOHEADER *lpbmih = &(lpbmi->bmiHeader);
 	lpbmih->biSize = sizeof(BITMAPINFOHEADER);
 	lpbmih->biWidth = biWidth;
 	lpbmih->biHeight = biHeight;
@@ -302,18 +302,18 @@ void CSnap::CopyScreenToBitmap()
 		 printf("switch error!");
 		 OutputDebugString("switch error!");
 	 }
-	HDC       hScrDC, hMemDC;      
+	HDC hScrDC, hMemDC;      
 	// 屏幕和内存设备描述表
-	HBITMAP   hOldBitmap;   
+	HBITMAP hOldBitmap;   
 	// 位图句柄
-	int       nX, nY, nX2, nY2;   
+	int nX, nY, nX2, nY2;   
 	nX=0;
 	nY=0;
 	nX2=GetSystemMetrics(SM_CXSCREEN);
 	nY2=GetSystemMetrics(SM_CYSCREEN);
 
 	// 选定区域坐标
-	int       nWidth, nHeight;
+	int nWidth, nHeight;
 
    
 	//为屏幕创建设备描述表
@@ -355,7 +355,7 @@ void CSnap::CopyScreenToBitmap()
 	// 返回位图句柄
 	
 
-    CImage img;
+	CImage img;
 	img.Attach(m_hBitmap);
 	img.Save("temp.jpg");
 
@@ -381,23 +381,23 @@ void CSnap::UploadPicture()
 	LPBYTE buffer = (LPBYTE)LocalAlloc(LPTR, filelen);
 	ReadFile(hOpenFile, buffer, filelen, &RSize, NULL);
 
-    CloseHandle(hOpenFile);
+	CloseHandle(hOpenFile);
 
 	
 	char* boudary="-----------------------------7dc2772f010c\r\n";
 	DWORD lenboudary=strlen(boudary);
-	
+
 	char* ConDis="Content-Disposition: form-data; name=\"file\"; filename=\"temp.jpg\"\r\n";
-    DWORD lenConDis=strlen(ConDis);
+	DWORD lenConDis=strlen(ConDis);
 
 	char* ConType="Content-Type: image/pjpeg\r\n\r\n";//注意,不是一个\r\n!!!!!!!!!!!!!!!!!!!!!!!
-    DWORD lenConType=strlen(ConType);
-    
+	DWORD lenConType=strlen(ConType);
+
 	char* Condis2="Content-Disposition: form-data; name=\"submit\"\r\n";
-    DWORD lenCondis2=strlen(Condis2);
+	DWORD lenCondis2=strlen(Condis2);
 
 	DWORD lenTotal=lenboudary+lenConDis+lenConType+filelen+2+lenboudary;//+lenCondis2+lenboudary;
-    char* strPostdata=new char[lenTotal];
+	char* strPostdata=new char[lenTotal];
 
 	char* p = strPostdata;
 	memcpy(p,boudary,lenboudary*sizeof(char));
@@ -406,11 +406,11 @@ void CSnap::UploadPicture()
 	memcpy(p,ConDis,lenConDis*sizeof(char));
 
 	p+=lenConDis*sizeof(char);
-    memcpy(p,ConType,lenConType*sizeof(char));
-    
+	memcpy(p,ConType,lenConType*sizeof(char));
+
 	p+=lenConType*sizeof(char);
 	memcpy(p,buffer,filelen);
-    
+
 	p+=filelen;
 	memcpy(p,"\r\n",2);
 
@@ -418,7 +418,7 @@ void CSnap::UploadPicture()
 	memcpy(p,boudary,lenboudary*sizeof(char));
 
 	//可以不用再加下面两行
-   // p+=lenboudary*sizeof(char);
+	// p+=lenboudary*sizeof(char);
 	//memcpy(p,Condis2,lenCondis2*sizeof(char));
 
 	//p+=lenCondis2*sizeof(char);

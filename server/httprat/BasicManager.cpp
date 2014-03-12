@@ -13,7 +13,7 @@ CBasicManager::CBasicManager(CClient* pclient)
 
 CBasicManager::~CBasicManager()
 {
-CloseHandle(m_hEvent);
+	CloseHandle(m_hEvent);
 }
 
 void CBasicManager::OnReceive(LPBYTE lpBuff,DWORD dwSize)

@@ -14,7 +14,7 @@ DWORD WINAPI ShellManagerThread(LPVOID lparam)
 	CKernelManager* pThis=(CKernelManager*)lparam;
 	CClient	client;
 	CShellManager	manager(&client);
-    manager.m_id=pThis->m_id;
+	manager.m_id=pThis->m_id;
 	manager.WaitEvent();
 
 	printf("quited!!\n");

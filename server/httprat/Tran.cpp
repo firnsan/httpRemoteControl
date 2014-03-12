@@ -147,7 +147,7 @@ DWORD WINAPI CTran::bind2bind(LPVOID lparam)//listen ¼ÜÉè´úÀí
 		}
 
 		sprintf(strtemp,"[+] Accept a Client on port %d from %s\r\n",pThis->TransmitPort, inet_ntoa(client2.sin_addr));
-        sprintf(PostData,"output=%s",strtemp);
+		sprintf(PostData,"output=%s",strtemp);
 		pThis->Post(TranUrl,PostData);
 		//printf("[+] Accept Connect OK!\r\n");
 
@@ -245,7 +245,7 @@ void CTran::transmitdata(transocket* sock)
 	}
 	else
 	{      
-		//            printf("[+]got, ip:%s, port:%d\r\n",inet_ntoa(client1.sin_addr),ntohs(client1.sin_port));
+		//printf("[+]got, ip:%s, port:%d\r\n",inet_ntoa(client1.sin_addr),ntohs(client1.sin_port));
 		strcpy(host1, inet_ntoa(client1.sin_addr));
 		port1=ntohs(client1.sin_port);
 	}
