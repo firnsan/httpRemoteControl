@@ -1,0 +1,34 @@
+form {
+	line-height:32px;
+	padding:10px;
+}
+
+form input[type="text"] {
+	max-width:474px;
+}
+
+#options {
+	width:900px;
+	margin:auto;
+}
+.float-left {
+	float:left;
+}
+
+.func-title {
+	width:180px;
+	padding:0 15px;
+	text-align:right;
+	font-weight:bold;
+}
+
+.usage {
+	width:90%;
+	padding:10px;
+	margin:20px auto;
+	background:#fdfdfd;
+}
+
+.usage p {
+	text-indent:2em;
+}

